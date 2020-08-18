@@ -20,8 +20,15 @@ O seu objetivo é garantir que quaisquer requisitos específicados pelo desenvol
 
 ## Justificativa
 
-
 O monitoramento automático com o mínimo de intervenção humana de quaisquer aplicações implantadas na nuvem ainda não está estabelecida na indústria. 
 No geral, boa parte das soluções proposta na literatura e na industria focam em métricas comuns da computação como memória, cpu e rede.
 Porém, poucos trabalhos focam em métricas como tempo de resposta, latência, número de requisições. 
 O *Kube Kepam* surge como uma alternativa ao propor mecanismos adaptativos que consideram tais métricas 
+
+## Tecnologias
+
+* [Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo)
+* [Kube-Prometheus](https://github.com/prometheus-operator/kube-prometheus)
+* [Istio](https://istio.io/latest/docs/ops/best-practices/observability/)
+* [Kubernetes](https://kubernetes.io/)
+* [Python](python.org)
