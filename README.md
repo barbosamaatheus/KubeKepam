@@ -31,4 +31,5 @@ O *Kube Kepam* surge como uma alternativa ao propor mecanismos adaptativos que c
 * [Kube-Prometheus](https://github.com/prometheus-operator/kube-prometheus)
 * [Istio](https://istio.io/latest/docs/ops/best-practices/observability/)
 * [Kubernetes](https://kubernetes.io/)
+* [API Python do Kubernetes](https://github.com/kubernetes-client/python)
 * [Python](python.org)
