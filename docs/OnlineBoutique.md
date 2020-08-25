@@ -1,6 +1,6 @@
-# Online Botique
+# Online Boutique
 
-## Passos para a instalação do Online Botique da Google em um Cluster Kubernetes Local
+## Passos para a instalação do Online Boutique da Google em um Cluster Kubernetes Local
 
 1. Clone o repositorio para sua maquina.
 
