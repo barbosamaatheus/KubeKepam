@@ -28,15 +28,25 @@
 
 ## Iniciação do cluster Kubernetes
 
+1. Criação da pasta kube na home da instalação
+
 `$ mkdir -p $HOME/.kube`
+
+2. Copiar arquivo padrao para pasta do kubernetes
 
 `$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config`
 
+3. Dar permissões para o arquivo
+
 `$ sudo chown $(id -u):$(id -g) $HOME/.kube/config`
+
+4. Criação de um rede dentro do kubernetes para comunição das maquinas entre o master e os workers
 
 `$ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"`
 
 `$ kubectl get pods -n kube-system`
+
+5. Adicionandos os workers ao cluster.
 
 `$ kubeadm join --token 39c341.a3bc3c4dd49758d5 IP_DO_MASTER:6443 --discovery-token-ca-cert-hash sha256:37092`
 
