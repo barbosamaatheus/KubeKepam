@@ -52,4 +52,4 @@ para mais informações, consulte a [documentação oficial](https://istio.io/la
 
 ## Implante a aplicação 
 
-Estamos usando o Online Botique como aplicação de demostraçaõ. Acesse a [documentação](docs/OnlineBotique.md) para saber com implantar
+Estamos usando o Online Botique como aplicação de demostraçaõ. Acesse a [documentação](docs/OnlineBoutique.md) para saber com implantar
