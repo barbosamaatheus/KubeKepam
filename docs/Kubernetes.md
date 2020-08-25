@@ -5,7 +5,7 @@
 
 1. Para instalação do kubernetes é  necessario ter uma instalação limpa do ubunto 2018 ou superior. Basta seguir esses passos para ter o kubernetes instalado.
 
-apt-get update && apt-get install -y apt-transport-https
+`$ apt-get update && apt-get install -y apt-transport-https`
 
 `$ curl -fsSL https://get.docker.com | bash`
 
