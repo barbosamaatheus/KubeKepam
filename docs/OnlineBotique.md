@@ -1,16 +1,20 @@
 # Online Botique
 
-## Rodando o online Botique
+## Passos para a instalação do Online Botique da Google em um Cluster Kubernetes Local
 
-1. É necessario clonar o repositorio para sua maquina.
+1. Clone o repositorio para sua maquina.
 
-2. Rodar os seguintes comandos
+`$ git clone https://github.com/GoogleCloudPlatform/microservices-demo.git`
+
+2. Implante os microsserviços no Kubernetes. 
 
 `$ kubectl apply -f ./release/kubernetes-manifests.yaml`
 
-3. Para olhar os pods rodando
+3. Verifique se todos os pods estão funcionando corretamente:
 
-`$ kubectl get pods`
+`$ watch kubectl get pods`
 
+4. Encontre a porta que a aplicação está rodando:
 
+`$ kubectl get service/frontend-external`
 
