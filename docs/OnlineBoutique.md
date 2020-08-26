@@ -19,4 +19,4 @@
 `$ kubectl get service/frontend-external`
 
 
-Por fim voce pode visualizar a documentação acessando a pagina da documentao [aqui](https://github.com/GoogleCloudPlatform/microservices-demo).
+Por fim voce pode visualizar a documentação acessando a pagina neste link [aqui](https://github.com/GoogleCloudPlatform/microservices-demo).
