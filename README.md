@@ -27,9 +27,9 @@ O *Kube Kepam* surge como uma alternativa ao propor mecanismos adaptativos que c
 
 ## Tecnologias
 
-* [Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo)
+* [Online Boutique](docs/OnlineBoutique.md)
 * [Kube-Prometheus](https://github.com/prometheus-operator/kube-prometheus)
-* [Istio](https://istio.io/latest/docs/ops/best-practices/observability/)
-* [Kubernetes](https://kubernetes.io/)
+* [Istio](docs/ISTIO.md)
+* [Kubernetes](docs/Kubernetes.md)
 * [API Python do Kubernetes](https://github.com/kubernetes-client/python)
 * [Python](python.org)
