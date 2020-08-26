@@ -64,13 +64,13 @@ Ou seja, quais máquinas serão Masters ou Workers.
 Além disso, certos comandos são efetuados apenas em máquinas do tipo Worker ou Master.
 Portanto, fique atente para não usar um comando para uma máquina Master em uma máquina Worker. 
 
-1. Inicialize o Cluster Kubernetes na máquina Master. 
+1. Inicialize o Cluster Kubernetes na máquina (Master). 
 
-     `$ kubeadm init --apiserver-advertise-address IP DA MÀQUINA`
+     `$ kubeadm init --apiserver-advertise-address ip_maquina_master`
 
 2. Colete o comando kubeadm join disponível no final da instalação. 
     * Esse comando será utilizado posteriormente nos Workers. 
-      Esse comando sempre varia para cada instalação do Kubernetes, mas o que você deve salvar é algo desse tipo: parece com algo desse tipo:
+      Esse comando sempre varia para cada instalação do Kubernetes, mas o que deve ser salvo é algo desse tipo:
 
          `$ kubeadm join --token 39c341.a3bc3c4dd49758d5 IP_DO_MASTER:6443 --discovery-token-ca-cert-hash sha256:37092`
 
@@ -96,7 +96,7 @@ Portanto, fique atente para não usar um comando para uma máquina Master em uma
 
      `$ kubeadm join --token 39c341.a3bc3c4dd49758d5 IP_DO_MASTER:6443 --discovery-token-ca-cert-hash sha256:37092`
      
-8. Visualize se os workers foram inseridos no cluster.
+8. Visualize se os workers foram inseridos no cluster (Master).
 
      `$ watch kubectl get nodes`
 
