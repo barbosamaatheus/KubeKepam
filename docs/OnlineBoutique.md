@@ -1,22 +1,58 @@
 # Online Boutique
 
-## Passos para a instalação do Online Boutique da Google em um Cluster Kubernetes Local
+## Tutorial de implantação do OnlineBoutique em um Cluster Kubernetes Local
 
-1. Clone o repositorio para sua maquina.
+**Requisitos para essa instalação:**
+* Cluster Kubernetes instalado (Tutorial disponível em: [Como montar seu Cluster Kubernetes](docs/Kubernetes.md))
 
-`$ git clone https://github.com/GoogleCloudPlatform/microservices-demo.git`
+## Implantação do OnlineBoutique
 
-2. Implante os microsserviços no Kubernetes. 
+1. Clone o repositorio para a maquina Master do Cluster.
 
-`$ kubectl apply -f ./release/kubernetes-manifests.yaml`
+     `$ git clone https://github.com/GoogleCloudPlatform/microservices-demo.git`
+     
+2. Entre na pasta clonada.
+     `$ cd nome_da_pasta`
 
-3. Verifique se todos os pods estão funcionando corretamente:
+3. Implante a MBA no Kubernetes. 
 
-`$ watch kubectl get pods`
+     `$ kubectl apply -f ./release/kubernetes-manifests.yaml`
 
-4. Encontre a porta que a aplicação está rodando:
+3. Verifique se todos os pods foram implantados corretamente.
 
-`$ kubectl get service/frontend-external`
+     `$ watch kubectl get pods`
+     
+     Se tudo ocorrer bem, o comando retornará como saida: 
+     ```bash
+     
+     NAME                                     READY   STATUS    RESTARTS   AGE
+     adservice-5c9c7c997f-bp5nl               1/1     Running   0          5m
+     cartservice-6d99678dd6-1vmf5             1/1     Running   1          5m
+     checkoutservice-779cb9bfdf-5fkhg         1/1     Running   0          5m
+     currencyservice-5db6c7d559-qnjmx         1/1     Running   0          5m
+     emailservice-5c47dc87bf-67shv            1/1     Running   0          5m
+     frontend-5fcb8cdcdc-n7tth                1/1     Running   0          5m
+     paymentservice-6564cb7fb9-x84vd          1/1     Running   0          5m
+     productcatalogservice-5db9444549-whhdk   1/1     Running   0          5m
+     recommendationservice-5d5f794679-7rgct   1/1     Running   0          5m
+     redis-cart-57bd646894-crjc5              1/1     Running   0          5m
+     shippingservice-f47755f97-kkdcj          1/1     Running   0          5m
+     
+     ```
+
+4. Identifique a porta na qual a aplicação está disponível.
+
+     `$ kubectl get service/frontend-external`
+    
+     Se tudo ocorrer bem, o comando retornará como saida: 
+     ```
+     NAME                TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+     frontend-external   LoadBalancer   10.105.128.254   <pending>     80:32558/TCP   5m
+     ```
+     
+5. Acesse a aplicação no navegador usando o IP do Master e a porta do microsserviço frontend.
+
+     `https://ip_maquina_master:porta_microsserviço_frontend`
 
 
-Por fim voce pode visualizar a documentação acessando a pagina neste link [aqui](https://github.com/GoogleCloudPlatform/microservices-demo).
+Para mais informações, acesse a documentação da MBA neste link [aqui](https://github.com/GoogleCloudPlatform/microservices-demo).
