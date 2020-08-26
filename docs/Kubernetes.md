@@ -1,5 +1,4 @@
 # Kubernetes
-===> Porque usar o Kubernetes <===
 
 ## Instalação do Kubernetes
 
@@ -51,3 +50,8 @@
 `$ kubeadm join --token 39c341.a3bc3c4dd49758d5 IP_DO_MASTER:6443 --discovery-token-ca-cert-hash sha256:37092`
 
 `$ kubectl get nodes`
+
+
+Voce tambem pode seguir este [tutorial](https://www.linuxtips.io/post/descomplicando-o-kubernetes-02) para utilização do kubernetes.
+
+segue tambem links da documentação oficial do [Kubernetes](https://kubernetes.io/).
