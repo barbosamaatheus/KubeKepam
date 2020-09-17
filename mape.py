@@ -1,20 +1,32 @@
-from monitor import coletar_dados_prometheus, coletar_numero_replicas
+from monitor import coletar_dados_prometheus, criar_base_quarentena
+from analisador import analisar_metricas, analisar_metricas_medias
+from planejador import planejar_adaptacao
+from executor import executar_adaptacao
+from time import sleep
 
-load_time = coletar_dados_prometheus('LoadTime', '[5m:1m]')
-traffic = coletar_dados_prometheus('Traffic', '[5m:1m]')
-pods = coletar_numero_replicas('default')
+data = {}
+first = True
 
-print('Métrica LoadTime')
-for key, value in load_time.items():
-    print(key, value)
-print()
+while True:
+    # Monitoramento
+    data['LoadTime'] = coletar_dados_prometheus('LoadTime', '[5m:1m]')
+    data['Traffic'] = coletar_dados_prometheus('Traffic', '[5m:1m]')
+    data['CPU'] = coletar_dados_prometheus('CPU', '[5m:1m]')
+    data['Pods'] = coletar_dados_prometheus('Pods', '')  # Coleta via Prometheus
+    # data['Pods'] = coletar_numero_replicas('default') # Coleta via Kubernetes
 
-print('Métrica Traffic')
-for key, value in traffic.items():
-    print(key, value)
-print()
+    if first:
+        data['AdaptationStatus'], data['TimeAdaptation'] = criar_base_quarentena(data)
+        first = False
 
-print('Número de pods')
-for key, value in pods.items():
-    print(key, value)
-print()
+    # Análise
+    data = analisar_metricas_medias(data)
+
+    # Planejamento
+    data = planejar_adaptacao(data)
+
+    # Execução
+    executar_adaptacao(data)
+    print()
+
+    sleep(15)

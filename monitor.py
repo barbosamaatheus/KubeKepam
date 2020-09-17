@@ -1,11 +1,14 @@
-PROMETHEUS_URL = 'http://10.66.66.53:32249/api/v1/query?query='
+PROMETHEUS_URL = 'http://10.66.66.53:30987/api/v1/query?query=' #URL do prometheus Istio
 
 METRICAS = {
     'Traffic':
         'sum(increase(istio_requests_total{destination_workload_namespace="default"}[1m])) by (destination_workload)',
     'LoadTime':
-        'sum(irate(istio_request_duration_milliseconds_bucket{reporter="destination", '
-        'destination_workload_namespace=~"default"}[1m])) by (destination_workload)'}
+        '(histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{reporter="destination", destination_workload_namespace=~"default"}[1m])) by (le, destination_workload)))',
+    'CPU':
+        '(sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="default"}* on(namespace,pod) group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload_type="deployment"}) by (workload)/sum(kube_pod_container_resource_requests_cpu_cores{namespace="default"}* on(namespace,pod) group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload_type="deployment"}) by (workload))',
+    'Pods':
+        'count(namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload_type="deployment"}) by (workload)'}
 
 
 def coletar_dados_prometheus(metrica, range=''):
@@ -56,7 +59,10 @@ def criar_requisicao_prometheus(metrica, range):
         Returns:
             A URL de consulta ao Prometheus para uma determinada métrica (str)
     """
-    return PROMETHEUS_URL + METRICAS.get(metrica) + range
+    if not metrica in ['CPU', 'Pods']:
+        return PROMETHEUS_URL + METRICAS.get(metrica) + range
+    else: # URL do Kube Prometheus
+        return 'http://10.66.66.53:30629/api/v1/query?query=' + METRICAS.get(metrica) + range
 
 
 def requisitar_prometheus(request_prometheus_api):
@@ -166,3 +172,14 @@ def coletar_numero_replicas(namespace):
         return dict_namespace
     except ApiException as e:
         print("Exception when calling AppsV1beta1Api->list_namespaced_deployment: %s\n" % e)
+
+
+def criar_base_quarentena(data):
+    adaptation_status = {}
+    time_after_adaptation = {}
+
+    for key in data[list(data.keys())[0]].keys():
+        adaptation_status[key] = 0
+        time_after_adaptation[key] = 0
+
+    return adaptation_status, time_after_adaptation
