@@ -5,10 +5,7 @@
 **Requisitos para essa instalação:**
 * Cluster Kubernetes instalado (Tutorial disponível em: [Como montar seu Cluster Kubernetes](docs/Kubernetes.md))
 
-
-
 ## Instalação do Istio
-
 
 1.  Acesse a página de [versões](https://github.com/istio/istio/releases) do Istio para baixar o arquivo de instalação 
     para seu sistema operacional ou faça o download e extraia a versão mais recente de forma automatica:

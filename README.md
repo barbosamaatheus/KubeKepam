@@ -58,14 +58,36 @@ O KubeKepam é uma aplicação composta pelos 4 principais compontes do MAPE-K, 
 
 ## Arquitetural Implementável
 
+PPara funcionar corretamente o KubeKepam precisa de algumas outras tecnologias/softwares que vão auxiliar na hora de receber métricas e adaptar automaticamente os microsserviços. Logo mais, vamos esclarecer quais são os componentes necessários e o que é utilizado de cada um deles.
+
+### Online Boutique
+
+Online Boutique é um aplicativo de demonstração de microsserviços nativo da nuvem. Consiste em um aplicativo de comércio eletrônico baseado na web construído em microsserviços de 10 camadas. Nele os usuários podem navegar pelos itens, adicioná-los ao carrinho e comprá-los. 
+
+Em nosso contexto, o Online Boutique faz parte da camada de aplicação, utilizamos ele como um simulador de aplicação real onde podemos gerar uma carga de consumo em cima e realizamos os testes e as demostrações do KubeKepam e seus demais componentes em funcionamento. 
+
+### Istio
+
+### Kube-Prometheus
+
+### Kubernetes
+
+Segundo o próprio site: "Kubernetes é um produto Open Source utilizado para automatizar a implantação, o dimensionamento e o gerenciamento de aplicativos em contêiner." 
+Nós utilizamos o Kubernetes, justamente com essa funcionalidade. Ele é o responsável por receber os comandos do KubeKepam e automatizar a implantação dos contêineres onde estão alocados os microsserviços.
+
+### Python
+
+Python é uma linguagem de programação de alto nível, amplamente utilizada no mercado. A tecnologia está presente nos códigos do Instagram, Netflix, Spotify, Reddit, Facebook, Google e muitos outros.
+Python foi a linguagem de programação escolhida para a implementação do KubeKepam devido a sua versatilidade e facilidade quando o assunto é microsserviços. Python também foi escolhida devida a utilização da **API Python do Kubernetes** que é utilizada em nosso projeto para realizar as adaptações dos microsserviços. 
+
 ## Link das Tecnologias
 
-* [Kubernetes](docs/Kubernetes.md)
+* [Kubernetes](https://kubernetes.io/pt/)
 * [Kube-Prometheus](https://github.com/prometheus-operator/kube-prometheus)
-* [Istio](docs/ISTIO.md)
-* [Online Boutique](docs/OnlineBoutique.md)
+* [Istio](https://istio.io/)
+* [Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo)
 * [API Python do Kubernetes](https://github.com/kubernetes-client/python)
-* [Python](python.org)
+* [Python](https://www.python.org/)
 
 ## Instalação
 
@@ -74,20 +96,22 @@ O KubeKepam é uma aplicação composta pelos 4 principais compontes do MAPE-K, 
 A instalação do Kube-Kepam exige alguns softwares pré-requisitos. Para aprender como instalar cada software acesse os tutoriais
 e os seus scripts de automatização a seguir: 
 
-*  [Como instalar o Kubernetes em Cluster](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/Kubernetes.md)
-*  [Como instalar o KubePrometheus](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/ISTIO.md)
-*  [Como instalar o Istio](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/ISTIO.md)
-*  [Como instalar o OnlineBoutique](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/OnlineBoutique.md)
+*  [Como instalar o Kubernetes em Cluster](docs/Kubernetes.md)
+*  [Como instalar o KubePrometheus](docs/ISTIO.md)
+*  [Como instalar o Istio](docs/ISTIO.md)
+*  [Como instalar o OnlineBoutique](docs/OnlineBoutique.md)
 
 # Como instalar o KubeKepam?  
-
 Para instalar o KubeKepam, siga os seguintes passos:
-
-    $ pip3 install -r requirements.txt
-    $ Configure as variáveis de ambiente em:  
-      1. Monitor: Métricas, Prometheus API URL ISTIO, Prometheus API URL KubeKepam;
-      2. Analisador: Valor desejado para cada métrica coletada no Monitor;
-      3. Planejador: Tempo de espera após uma adaptação;
-      4. Executor: Mover o arquivo .config da $HOME/.kube/config do Cluster Kubernetes para $HOME/.kube/config da máquina executando o KubeKepam. 
-      5. Mape: Configurar tempo entre ciclos de execução; 
-    $ python3 mape-k.py
+1. Faça clone do repositorio:   
+  `$ git clone https://gitcin.cin.ufpe.br/wrms/kubekepam.git`  
+2. Entre no diretorio e execute:  
+  `$ pip3 install -r requirements.txt`  
+3. Configure as variaveis de ambeinte:  
+  **Monitor**: Métricas, Prometheus API URL ISTIO, Prometheus API URL KubeKepam;  
+  **Analisador**: Valor desejado para cada métrica coletada no Monitor;  
+  **Planejador**: Tempo de espera após uma adaptação;  
+  **Executor**: Mover o arquivo `.config` da `$HOME/.kube/config` do Cluster Kubernetes para `$HOME/.kube/config` da máquina executando o KubeKepam;  
+  **Mape**: Configurar tempo entre ciclos de execução;  
+4. Execute:   
+  `$ python3 mape-k.py`
