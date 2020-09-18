@@ -67,8 +67,37 @@ Online Boutique é um aplicativo de demonstração de microsserviços nativo da 
 Em nosso contexto, o Online Boutique faz parte da camada de aplicação, utilizamos ele como um simulador de aplicação real onde podemos gerar uma carga de consumo em cima e realizamos os testes e as demostrações do KubeKepam e seus demais componentes em funcionamento. 
 
 ##### Istio
+Istio é uma plataforma de service mesh open source que permite controlar a maneira como os microsserviços compartilham dados entre si. O Istio inclui APIs para que ele possa se integrar a qualquer plataforma de geração de registros, sistema de telemetria ou sistema de políticas.
+
+Em nosso contexto, o Istio é utilizado para capturar metricas de negocio, relacionadas as propriedades dos microsserviços.  
+Como por exemplo:  
+* Tempo de resposta dos microsserviços;
+* Tráfego dos microsserviços;
+
+Essas metricas expostas pelo Istio são armazenadas no Prometheus;
 
 ##### Kube-Prometheus
+
+É um pacote/biblioteca que inclui uma série de componentes como:
+* The Prometheus Operator
+* Highly available Prometheus
+* Highly available Alertmanager
+* Prometheus node-exporter
+* Prometheus Adapter for Kubernetes Metrics APIs
+* Kube-state-metrics
+* Grafana
+
+A ferramenta possui uma pré-configuração que permite coletar métricas de todos os componentes Kubernetes. 
+Além disso, permite acesso ao conjunto de painéis do software Grafana contendo a visualização dessas métricas em tempo de execução.
+
+O Kube é responsavel pela coleta de metricas relacionadas a infraestrutura. 
+Como por exemplo:
+* CPU;
+* Memoria;
+* Rede;
+* Numero de Pods;
+
+Essa coleta é realizada pelo **Kube-state-metrics** e armazenadas do Prometheus.
 
 ##### Kubernetes
 
