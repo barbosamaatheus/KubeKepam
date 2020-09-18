@@ -12,9 +12,18 @@ Essa disciplina é ofertada em conjunto para a graduação [(IF1007)](https://gi
   - [Equipe](#equipe)
   - [Justificativa](#justificativa)
   - [Arquitetura Conceitual](#arquitetura-conceitual)
+    - [O que é o MAPE-K?](#o-que-e-o-mape-k?)
+    - [Como funciona o MAPE-K do KubeKepam?](como-funciona-o-mape-k-do-kubekepam?)
   - [Arquitetural Implementável](#arquitetural-implementável)
+    - [Online Boutique](#online-boutique) 
+    - [Istio](#istio)
+    - [Kube-Prometheus](#kube-prometheus)
+    - [Kubernetes](#kubernetes)
+    - [Python](#python)
   - [Link das Tecnologias](#link-das-tecnologias)
-  - [Guia de Instalações e Scipts](#guias-com-instalações-e-scipts-automatizados)
+  - [Guia de Instalações e Scipts](#guia-de-instalacoes-e-scipts)
+    - [Softwares adcionais](#softwares-adcionais)
+    - [Como instalar o KubeKepam?](#como-instalar-o-kubekepam)  
 
 
 ## Equipe
@@ -58,7 +67,7 @@ O KubeKepam é uma aplicação composta pelos 4 principais compontes do MAPE-K, 
 
 ## Arquitetural Implementável
 
-PPara funcionar corretamente o KubeKepam precisa de algumas outras tecnologias/softwares que vão auxiliar na hora de receber métricas e adaptar automaticamente os microsserviços. Logo mais, vamos esclarecer quais são os componentes necessários e o que é utilizado de cada um deles.
+Para funcionar corretamente o KubeKepam precisa de algumas outras tecnologias/softwares que vão auxiliar na hora de receber métricas e adaptar automaticamente os microsserviços. Logo mais, vamos esclarecer quais são os componentes necessários e o que é utilizado de cada um deles.
 
 ##### Online Boutique
 
@@ -109,7 +118,7 @@ Nós utilizamos o Kubernetes, justamente com essa funcionalidade. Ele é o respo
 Python é uma linguagem de programação de alto nível, amplamente utilizada no mercado. A tecnologia está presente nos códigos do Instagram, Netflix, Spotify, Reddit, Facebook, Google e muitos outros.
 Python foi a linguagem de programação escolhida para a implementação do KubeKepam devido a sua versatilidade e facilidade quando o assunto é microsserviços. Python também foi escolhida devida a utilização da **API Python do Kubernetes** que é utilizada em nosso projeto para realizar as adaptações dos microsserviços. 
 
-##### Link das Tecnologias
+## Link das Tecnologias
 
 * [Kubernetes](https://kubernetes.io/pt/)
 * [Kube-Prometheus](https://github.com/prometheus-operator/kube-prometheus)
@@ -118,7 +127,7 @@ Python foi a linguagem de programação escolhida para a implementação do Kube
 * [API Python do Kubernetes](https://github.com/kubernetes-client/python)
 * [Python](https://www.python.org/)
 
-## Instalação
+## Guia de Instalações e Scipts
 
 ##### Softwares adcionais
 
