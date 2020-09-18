@@ -60,11 +60,34 @@ O KubeKepam é uma aplicação composta pelos 4 principais compontes do MAPE-K, 
 
 ## Link das Tecnologias
 
-* [Online Boutique](docs/OnlineBoutique.md)
+* [Kubernetes](docs/Kubernetes.md)
 * [Kube-Prometheus](https://github.com/prometheus-operator/kube-prometheus)
 * [Istio](docs/ISTIO.md)
-* [Kubernetes](docs/Kubernetes.md)
+* [Online Boutique](docs/OnlineBoutique.md)
 * [API Python do Kubernetes](https://github.com/kubernetes-client/python)
 * [Python](python.org)
 
-## Guias com instalações e Scipts Automatizados
+## Instalação
+
+# Softwares adcionais
+
+A instalação do Kube-Kepam exige alguns softwares pré-requisitos. Para aprender como instalar cada software acesse os tutoriais
+e os seus scripts de automatização a seguir: 
+
+*  [Como instalar o Kubernetes em Cluster](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/Kubernetes.md)
+*  [Como instalar o KubePrometheus](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/ISTIO.md)
+*  [Como instalar o Istio](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/ISTIO.md)
+*  [Como instalar o OnlineBoutique](https://gitcin.cin.ufpe.br/wrms/kubekepam/blob/master/docs/OnlineBoutique.md)
+
+# Como instalar o KubeKepam?  
+
+Para instalar o KubeKepam, siga os seguintes passos:
+
+    $ pip3 install -r requirements.txt
+    $ Configure as variáveis de ambiente em:  
+      1. Monitor: Métricas, Prometheus API URL ISTIO, Prometheus API URL KubeKepam;
+      2. Analisador: Valor desejado para cada métrica coletada no Monitor;
+      3. Planejador: Tempo de espera após uma adaptação;
+      4. Executor: Mover o arquivo .config da $HOME/.kube/config do Cluster Kubernetes para $HOME/.kube/config da máquina executando o KubeKepam. 
+      5. Mape: Configurar tempo entre ciclos de execução; 
+    $ python3 mape-k.py
