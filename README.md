@@ -1,4 +1,4 @@
-# KubeKepam
+# ![Logo](/docs/img/logo.png) KubeKepam
 
 O *Kube Kepam* é uma solução auto adaptativa que gerencia quaisquer Microservice-Based Applications (MBAs) implantadas em Cluster Kubernetes. 
 O seu objetivo é garantir que quaisquer requisitos específicados pelo desenvolvedores não sejam violados em tempo de execução. Ele é um projeto da disciplina Desenvolvimento de Aplicações com Arquitetura Baseada em Microsserviços. 
