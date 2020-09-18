@@ -33,7 +33,7 @@ O *Kube Kepam* surge como uma alternativa ao propor mecanismos adaptativos que c
 
 ## Arquitetura Conceitual
 
-**O que é o MAPE-K?**
+##### O que é o MAPE-K?
 
 O MAPE-K consiste em um modelo de computação autônoma desenvolvido pela IBM. Esse modelo é composto pelas fases de monitoramento, análise, planejamento e execução em conjunto com uma base de conhecimento. Um modelo genérico MAPE-K é apresentado a seguir: 
 
@@ -42,7 +42,7 @@ O MAPE-K consiste em um modelo de computação autônoma desenvolvido pela IBM. 
 </p>
 
 
-**Como funciona o MAPE-K do KubeKepam?**
+##### Como funciona o MAPE-K do KubeKepam?
 
 O KubeKepam é uma aplicação composta pelos 4 principais compontes do MAPE-K, sendo eles: monitor, analisador, planejador e executor. A Figura abaixo apresenta o KubeKepam.
 
@@ -60,27 +60,27 @@ O KubeKepam é uma aplicação composta pelos 4 principais compontes do MAPE-K, 
 
 PPara funcionar corretamente o KubeKepam precisa de algumas outras tecnologias/softwares que vão auxiliar na hora de receber métricas e adaptar automaticamente os microsserviços. Logo mais, vamos esclarecer quais são os componentes necessários e o que é utilizado de cada um deles.
 
-### Online Boutique
+##### Online Boutique
 
 Online Boutique é um aplicativo de demonstração de microsserviços nativo da nuvem. Consiste em um aplicativo de comércio eletrônico baseado na web construído em microsserviços de 10 camadas. Nele os usuários podem navegar pelos itens, adicioná-los ao carrinho e comprá-los. 
 
 Em nosso contexto, o Online Boutique faz parte da camada de aplicação, utilizamos ele como um simulador de aplicação real onde podemos gerar uma carga de consumo em cima e realizamos os testes e as demostrações do KubeKepam e seus demais componentes em funcionamento. 
 
-### Istio
+##### Istio
 
-### Kube-Prometheus
+##### Kube-Prometheus
 
-### Kubernetes
+##### Kubernetes
 
 Segundo o próprio site: "Kubernetes é um produto Open Source utilizado para automatizar a implantação, o dimensionamento e o gerenciamento de aplicativos em contêiner." 
 Nós utilizamos o Kubernetes, justamente com essa funcionalidade. Ele é o responsável por receber os comandos do KubeKepam e automatizar a implantação dos contêineres onde estão alocados os microsserviços.
 
-### Python
+##### Python
 
 Python é uma linguagem de programação de alto nível, amplamente utilizada no mercado. A tecnologia está presente nos códigos do Instagram, Netflix, Spotify, Reddit, Facebook, Google e muitos outros.
 Python foi a linguagem de programação escolhida para a implementação do KubeKepam devido a sua versatilidade e facilidade quando o assunto é microsserviços. Python também foi escolhida devida a utilização da **API Python do Kubernetes** que é utilizada em nosso projeto para realizar as adaptações dos microsserviços. 
 
-## Link das Tecnologias
+##### Link das Tecnologias
 
 * [Kubernetes](https://kubernetes.io/pt/)
 * [Kube-Prometheus](https://github.com/prometheus-operator/kube-prometheus)
@@ -91,7 +91,7 @@ Python foi a linguagem de programação escolhida para a implementação do Kube
 
 ## Instalação
 
-# Softwares adcionais
+##### Softwares adcionais
 
 A instalação do Kube-Kepam exige alguns softwares pré-requisitos. Para aprender como instalar cada software acesse os tutoriais
 e os seus scripts de automatização a seguir: 
@@ -101,7 +101,7 @@ e os seus scripts de automatização a seguir:
 *  [Como instalar o Istio](docs/ISTIO.md)
 *  [Como instalar o OnlineBoutique](docs/OnlineBoutique.md)
 
-# Como instalar o KubeKepam?  
+##### Como instalar o KubeKepam?  
 Para instalar o KubeKepam, siga os seguintes passos:
 1. Faça clone do repositorio:   
   `$ git clone https://gitcin.cin.ufpe.br/wrms/kubekepam.git`  
