@@ -1,4 +1,4 @@
-def executar_adaptacao(data):
+def executar_adaptacao(data: dict):
     """Executar a adaptação planejada
        Args:
             data (dict): Dicionário contendo todas as informações
@@ -10,7 +10,7 @@ def executar_adaptacao(data):
             scale_deployment(key, 'default', data['LoadTime'][key])
 
 
-def scale_deployment(nome_deployment, namespace, replicas):
+def scale_deployment(nome_deployment: str, namespace: str, replicas: float):
     """Scale o deployment Kubernetes
        Args:
             nome_deployment (str): Refere-se ao deployment implantado no Kubernetes
@@ -29,6 +29,6 @@ def scale_deployment(nome_deployment, namespace, replicas):
     pretty = 'true'  # str | If 'true', then the output is pretty printed. (optional)
 
     try:
-        api_response = api_instance.patch_namespaced_deployment_scale(name, namespace, body, pretty=pretty)
+        api_instance.patch_namespaced_deployment_scale(name, namespace, body, pretty=pretty)
     except ApiException as e:
         print("Exception when calling AppsV1Api->patch_namespaced_deployment_scale: %s\n" % e)

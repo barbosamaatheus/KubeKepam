@@ -1,23 +1,33 @@
-PROMETHEUS_URL = 'http://10.66.66.53:30987/api/v1/query?query=' #URL do prometheus Istio
+from typing import Tuple, Dict
+
+PROMETHEUS_URL = 'http://10.66.66.53:30782/api/v1/query?query='  # URL do prometheus Istio
+PROMETHEUS_KUBE_PROMETHEUS = 'http://10.66.66.53:30298/api/v1/query?query='  # URL do prometheus KubePrometheus
 
 METRICAS = {
     'Traffic':
         'sum(increase(istio_requests_total{destination_workload_namespace="default"}[1m])) by (destination_workload)',
     'LoadTime':
-        '(histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{reporter="destination", destination_workload_namespace=~"default"}[1m])) by (le, destination_workload)))',
+        '(histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{reporter="destination", '
+        'destination_workload_namespace=~"default"}[1m])) by (le, destination_workload)))',
     'CPU':
-        '(sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="default"}* on(namespace,pod) group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload_type="deployment"}) by (workload)/sum(kube_pod_container_resource_requests_cpu_cores{namespace="default"}* on(namespace,pod) group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload_type="deployment"}) by (workload))',
+        '(sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace="default"}* on('
+        'namespace,pod) group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{'
+        'namespace="default", workload_type="deployment"}) by (workload)/sum('
+        'kube_pod_container_resource_requests_cpu_cores{namespace="default"}* on(namespace,pod) group_left(workload, '
+        'workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", '
+        'workload_type="deployment"}) by (workload))',
     'Pods':
-        'count(namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload_type="deployment"}) by (workload)'}
+        'count(namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload_type="deployment"}) by ('
+        'workload)'}
 
 
-def coletar_dados_prometheus(metrica, range=''):
+def coletar_dados_prometheus(metrica: str, intervalo_prometheus: str = '') -> dict:
     """Coletar quaisquer métricas do Prometheus
         Args:
             metrica (str): Chave da métrica do Prometheus a ser consultada
             no dicionário METRICAS.
 
-            range (str): intervalo de informações que será retornado.
+            intervalo_prometheus (str): intervalo de informações que será retornado.
 
         Returns:
             dados_processados (dict):
@@ -41,31 +51,32 @@ def coletar_dados_prometheus(metrica, range=''):
                          {adservice: [100, 102, 109, 112],
                           frontend: [50, 100, 115, 125]}
     """
-    requisicao_prometheus_api = criar_requisicao_prometheus(metrica, range)
+    requisicao_prometheus_api = criar_requisicao_prometheus(metrica, intervalo_prometheus)
     dados = requisitar_prometheus(requisicao_prometheus_api)
+    print(type(dados))
     dados_processados = processar_dados(dados)
 
     return dados_processados
 
 
-def criar_requisicao_prometheus(metrica, range):
+def criar_requisicao_prometheus(metrica: str, intervalo_prometheus: str) -> str:
     """Constrói a requisição do Prometheus
         Args:
             metrica (str): Chave da métrica do Prometheus a ser consultada
             no dicionário METRICAS.
 
-            range (str): intervalo de informações que será retornado.
+            intervalo_prometheus (str): intervalo de informações que será retornado.
 
         Returns:
             A URL de consulta ao Prometheus para uma determinada métrica (str)
     """
-    if not metrica in ['CPU', 'Pods']:
-        return PROMETHEUS_URL + METRICAS.get(metrica) + range
-    else: # URL do Kube Prometheus
-        return 'http://10.66.66.53:30629/api/v1/query?query=' + METRICAS.get(metrica) + range
+    if metrica not in ['CPU', 'Pods']:
+        return PROMETHEUS_URL + METRICAS.get(metrica) + intervalo_prometheus
+    else:  # URL do Kube Prometheus
+        return PROMETHEUS_KUBE_PROMETHEUS + METRICAS.get(metrica) + intervalo_prometheus
 
 
-def requisitar_prometheus(request_prometheus_api):
+def requisitar_prometheus(request_prometheus_api: str) -> dict:
     """Coletar dados no prometheus através de um GET.
 
         Args:
@@ -73,7 +84,7 @@ def requisitar_prometheus(request_prometheus_api):
             para uma determinada métrica.
 
         Returns:
-            Dado bruto do Prometheus seguindo a estruturação do json (str).
+            Dado bruto do Prometheus seguindo a estruturação do json (dict).
     """
     from json import loads
     from requests import get
@@ -81,10 +92,10 @@ def requisitar_prometheus(request_prometheus_api):
     return loads(get(request_prometheus_api).text)
 
 
-def processar_dados(dados):
+def processar_dados(dados: dict) -> dict:
     """Processar e tratar os dados coletados no Prometheus.
         Args:
-            dados (str): Dados brutos de um determina consulta ao Prometheus.
+            dados (dict): Dados brutos de um determina consulta ao Prometheus.
 
         Returns:
             Informações processadas e tratadas (dict).
@@ -140,12 +151,12 @@ def processar_dados(dados):
     return dados_processados
 
 
-def coletar_numero_replicas(namespace):
+def coletar_numero_replicas(namespace: str):
     """API do Kubernetes responsável por coletar o número de réplicas
         de um Deployment implantando no Kubernetes.
 
         Args:
-            namespace (str): nome do namespace do Kubernetes.
+            namespace (str): Namespace da aplicação no Kubernetes
 
         Returns:
             Dicionário com a quantidade de pods por deployment (dict).
@@ -157,15 +168,12 @@ def coletar_numero_replicas(namespace):
     from kubernetes import config, client
 
     configuration = config.load_kube_config()
-
-    # create an instance of the API class
     api_instance = client.AppsV1Api(client.ApiClient(configuration))
 
     try:
         api_response = api_instance.list_namespaced_deployment(namespace=namespace)
         dict_namespace = {}
         for i in range(0, len(api_response.items)):
-            # dict_namespace[api_response.items[i].metadata.name] = 0
             deployment = api_response.items[i].metadata.name
             dict_namespace[deployment] = api_instance.read_namespaced_deployment_scale(deployment,
                                                                                        namespace).spec.replicas
@@ -174,11 +182,25 @@ def coletar_numero_replicas(namespace):
         print("Exception when calling AppsV1beta1Api->list_namespaced_deployment: %s\n" % e)
 
 
-def criar_base_quarentena(data):
+def criar_base_quarentena(dados: dict) -> Tuple[Dict[str, int], Dict[str, int]]:
+    """Criar a estrutura para lidar com função de contenção
+        de adaptações sucessivas no KubeKepam
+
+        Args:
+            dados (dict): nome do namespace do Kubernetes.
+
+        Returns:
+            Dicionário com a estrutura da função adaptação
+             sucessivas KubeKepam.
+
+            Por exemplo:
+            'AdaptationStatus': {'currencyservice': 0, 'emailservice': 0}
+            'TimeAdaptation': {'currencyservice': 0, 'emailservice': 0}
+    """
     adaptation_status = {}
     time_after_adaptation = {}
 
-    for key in data[list(data.keys())[0]].keys():
+    for key in dados[list(dados.keys())[0]].keys():
         adaptation_status[key] = 0
         time_after_adaptation[key] = 0
 

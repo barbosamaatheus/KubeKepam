@@ -1,5 +1,5 @@
 from monitor import coletar_dados_prometheus, criar_base_quarentena
-from analisador import analisar_metricas, analisar_metricas_medias
+from analisador import analisar_metricas_medias
 from planejador import planejar_adaptacao
 from executor import executar_adaptacao
 from time import sleep
@@ -19,14 +19,8 @@ while True:
         data['AdaptationStatus'], data['TimeAdaptation'] = criar_base_quarentena(data)
         first = False
 
-    # Análise
-    data = analisar_metricas_medias(data)
-
-    # Planejamento
-    data = planejar_adaptacao(data)
-
-    # Execução
-    executar_adaptacao(data)
-    print()
+    data = analisar_metricas_medias(data)  # Análise
+    data = planejar_adaptacao(data)  # Planejamento
+    executar_adaptacao(data)  # Execução
 
     sleep(15)

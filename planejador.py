@@ -1,4 +1,9 @@
-def tempo_atual():
+LIMITE_INFERIOR_HPA = 0.9
+LIMITE_SUPERIOR_HPA = 1.1
+TEMPO_ESPERA_ADAPTACAO = 600
+
+
+def coletar_tempo_atual() -> float:
     """Colete o tempo atual
 
        Returns:
@@ -8,7 +13,7 @@ def tempo_atual():
     return time.time()
 
 
-def desbloquear_deployment(data, key):
+def desbloquear_deployment(data: dict, key: str) -> dict:
     """Tentativa de desbloqueio de um Deployment impedido de adaptar
        Args:
             data (dict): Dicionário contendo todas as informações
@@ -19,14 +24,15 @@ def desbloquear_deployment(data, key):
            data (dict). O dicionário contendo informações atualizadas sobre
            o processo de adaptação.
    """
-    if (tempo_atual() - data['TimeAdaptation'][key]) >= 600:  # Faz mais de 10 minutos que ele adaptou?
+
+    if (coletar_tempo_atual() - data['TimeAdaptation'][key]) >= TEMPO_ESPERA_ADAPTACAO:  # Faz N minutos da adaptação?
         data['TimeAdaptation'][key] = 0  # Permita a adaptação
         data['AdaptationStatus'][key] = 0  # Permita a adaptação
 
     return data
 
 
-def atualizar_status_deployment(data, key):
+def atualizar_status_deployment(data: dict, key: str) -> dict:
     """Atualizar o status adaptativo do Deployment
        Args:
             data (dict): Dicionário contendo todas as informações
@@ -45,7 +51,7 @@ def atualizar_status_deployment(data, key):
             print('Planejador Adaptando')
             print(key, data['LoadTime'][key])
             data['AdaptationStatus'][key] = 1
-            data['TimeAdaptation'][key] = tempo_atual()
+            data['TimeAdaptation'][key] = coletar_tempo_atual()
     else:  # O deployment está bloqueado
         data['LoadTime'][key] = 0
         print('Planejador Bloqueado')
@@ -54,7 +60,7 @@ def atualizar_status_deployment(data, key):
     return data
 
 
-def calcule_mudanca_trafego(dif_trafego, cpu, number_pods):
+def calcule_mudanca_trafego(dif_trafego: float, cpu: float, number_pods: float) -> int:
     """Planejar ações para adaptar o Cluster
        Args:
             dif_trafego (float): Diferença no tráfego do deployment
@@ -74,7 +80,7 @@ def calcule_mudanca_trafego(dif_trafego, cpu, number_pods):
         return 0
 
 
-def calculate_pods(proporcao, number_pods):
+def calculate_pods(proporcao: float, number_pods: float) -> int:
     """Calcular o número de pods dada uma determina proporção
        Args:
             proporcao (float): Diferença entre o valor desejado da métrica
@@ -86,7 +92,7 @@ def calculate_pods(proporcao, number_pods):
            para lidar com a demanda desejada do servidor.
    """
     from math import ceil
-    if proporcao > 0.9 or proporcao < 1.1:
+    if proporcao > LIMITE_INFERIOR_HPA or proporcao < LIMITE_SUPERIOR_HPA:
         if ceil(number_pods * proporcao) == number_pods:
             return 0
         else:
@@ -95,7 +101,7 @@ def calculate_pods(proporcao, number_pods):
         return 0
 
 
-def planejar_adaptacao(data: dict):
+def planejar_adaptacao(data: dict) -> dict:
     """Planejar ações para adaptar o Cluster
        Args:
            data (dict): Dicionário contendo todas as proporções das métricas
